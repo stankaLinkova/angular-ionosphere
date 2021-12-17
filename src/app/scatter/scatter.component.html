@@ -1,0 +1,122 @@
+<div class="scatter-wrapper">
+  <form (ngSubmit)="formSubmit()" #formModel="ngForm">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <mat-card-title>Scatter</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field appearance="fill" name="selectAttribute">
+          <mat-label>Attribute</mat-label>
+          <mat-select
+            [(ngModel)]="selectedAttribute"
+            name="attributes"
+            required
+          >
+            <mat-option
+              *ngFor="let attribute of attributes"
+              [value]="attribute"
+            >
+              {{ attribute }}
+            </mat-option>
+          </mat-select>
+          <mat-hint>Choose an attribute: s4, tecu or sigmaphi.</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="start of azimuth"
+            [(ngModel)]="azimuthStart"
+            name="azimuthStart"
+          />
+          <mat-hint
+            >Choose the start of the azimuth. Ex. 210. Default: 0</mat-hint
+          >
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="end of azimuth"
+            [(ngModel)]="azimuthEnd"
+            name="azimuthEnd"
+          />
+          <mat-hint>Choose the end of the azimuth. Default: 360</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="start of elevation"
+            [(ngModel)]="elevationStart"
+            name="elevationStart"
+          />
+          <mat-hint
+            >Choose the start of the elevation. Ex. 30. Default: 0</mat-hint
+          >
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="end of elevation"
+            [(ngModel)]="elevationEnd"
+            name="elevationEnd"
+          />
+          <mat-hint>Choose the end of the elevation. Default: 90</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Date"
+            [(ngModel)]="dateRange"
+            name="dateRange"
+            required
+            type="text"
+            bsDaterangepicker
+          />
+          <mat-hint>Choose range of date.</mat-hint>
+        </mat-form-field>
+
+        <timepicker
+          [(ngModel)]="timeStart"
+          required
+          name="timeStart"
+          [showMeridian]="isMeridian"
+        ></timepicker>
+        <mat-hint>Choose start hour.</mat-hint>
+
+        <timepicker
+          [(ngModel)]="timeEnd"
+          required
+          name="timeEnd"
+          [showMeridian]="isMeridian"
+        ></timepicker>
+        <mat-hint>Choose end hour.</mat-hint>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button
+          type="submit"
+          mat-raised-button
+          color="accent"
+          [disabled]="formModel.form.invalid"
+        >
+          SHOW GRAPH
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="hidden"
+    (click)="download()"
+  >
+    Download csv file
+  </button>
+
+  <div echarts [options]="option" class="demo-chart"></div>
+</div>

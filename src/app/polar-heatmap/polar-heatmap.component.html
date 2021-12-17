@@ -1,0 +1,79 @@
+<div class="heatmap-wrapper">
+  <form (ngSubmit)="formSubmit()" #formModel="ngForm">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <mat-card-title>Heatmap</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field appearance="fill" name="selectStation">
+          <mat-label>Station</mat-label>
+          <mat-select [(ngModel)]="selectedStation" name="stations" required>
+            <mat-option *ngFor="let station of stations" [value]="station">
+              {{ station }}
+            </mat-option>
+          </mat-select>
+          <mat-hint>Select a station.</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" name="selectAttribute">
+          <mat-label>Attribute</mat-label>
+          <mat-select
+            [(ngModel)]="selectedAttribute"
+            name="attributes"
+            required
+          >
+            <mat-option
+              *ngFor="let attribute of attributes"
+              [value]="attribute"
+            >
+              {{ attribute }}
+            </mat-option>
+          </mat-select>
+          <mat-hint>Choose an attribute: s4, tecu or sigmaphi.</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Date"
+            [(ngModel)]="dateRange"
+            name="dateRange"
+            required
+            type="text"
+            bsDaterangepicker
+          />
+          <mat-hint>Choose range of date.</mat-hint>
+        </mat-form-field>
+
+        <timepicker
+          [(ngModel)]="timeStart"
+          required
+          name="timeStart"
+          [showMeridian]="isMeridian"
+        ></timepicker>
+        <mat-hint>Choose start hour.</mat-hint>
+
+        <timepicker
+          [(ngModel)]="timeEnd"
+          required
+          name="timeEnd"
+          [showMeridian]="isMeridian"
+        ></timepicker>
+        <mat-hint>Choose end hour.</mat-hint>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button
+          type="submit"
+          mat-raised-button
+          color="accent"
+          [disabled]="formModel.form.invalid"
+        >
+          SHOW GRAPH
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+
+  <div echarts [options]="options" class="demo-chart"></div>
+</div>
